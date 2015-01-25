@@ -64,4 +64,23 @@ public class MySQLConnectionTest {
    
   }
   
+  @Test
+  public void TestComposerMainFail(){
+    //run from config file
+    
+    try {
+      Properties props = new ConfigReader().getPropValuesFromFile();
+      Main.main(new String[] {"-c", props.getProperty("database.url")
+          ,"-u", "noone"
+          ,"-p", "badpass"
+          ,"-s", props.getProperty("sourceTableName")
+          ,"-t", props.getProperty("targetTableName")
+          ,"-o", props.getProperty("output.file")});
+      
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+   
+  }
+  
 }

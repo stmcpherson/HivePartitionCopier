@@ -42,6 +42,24 @@ public class DBQueryRunner {
     rowIndexes = this.GetTableIndexes();
   }
 
+  public boolean TestConnection() throws ClassNotFoundException, SQLException {
+    String query = "show tables;";
+
+    ResultSet resultSet = null;
+    boolean connected = false; 
+   
+    Class.forName(driverClassName);
+    Connection connection = DriverManager.getConnection(url, username, password);
+    Statement statement = connection.createStatement();
+    resultSet = statement.executeQuery(query);
+
+    while (resultSet.next()) {
+      connected = true;
+      break;
+    }
+    connection.close();
+    return connected;
+  }
   public int GetTableId(String tableName) {
 
     String query = "Select TBL_ID from TBLS where TBL_NAME ='" + tableName + "' LIMIT 1;";
