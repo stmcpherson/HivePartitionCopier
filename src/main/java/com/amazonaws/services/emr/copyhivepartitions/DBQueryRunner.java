@@ -175,7 +175,10 @@ public class DBQueryRunner {
         boolean isFirst = (ix == 1);
         writer.println(item.ToSQLInsert( isFirst));
       }
+      i++;
       writer.println(";");
+      writer.println("UPDATE SEQUENCE_TABLE SET NEXT_VAL='" + i + "' WHERE SEQUENCE_NAME='org.apache.hadoop.hive.metastore.model.MPartition';");
+
       connection.close();
       writer.close();
 
@@ -290,6 +293,8 @@ public class DBQueryRunner {
         writer.println(item.ToSQLInsert( isFirst));
       }
       writer.println(";");
+      i++;
+      writer.println("UPDATE SEQUENCE_TABLE SET NEXT_VAL='" + i + "' WHERE SEQUENCE_NAME='org.apache.hadoop.hive.metastore.model.MSerDeInfo';");
       
       connection.close();
       writer.close();
@@ -334,6 +339,9 @@ public class DBQueryRunner {
         writer.println(item.ToSQLInsert( isFirst));
       }
       writer.println(";");
+      i++;
+      writer.println("UPDATE SEQUENCE_TABLE SET NEXT_VAL='" + i + "' WHERE SEQUENCE_NAME='org.apache.hadoop.hive.metastore.model.MStorageDescriptor';");
+
       connection.close();
       writer.close();
 
