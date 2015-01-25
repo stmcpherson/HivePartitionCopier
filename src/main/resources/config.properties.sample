@@ -1,0 +1,11 @@
+# Just change the name of this file to config.properties (remove the .sample)
+# having this the gitignore file is set to block the primary file from being uploaded
+# this is to keep developers from unintentionally checking in file with a password
+
+database.url=jdbc\:mysql\://emrdb.sdsdsdwwws.us-east-1.rds.amazonaws.com\:3306/hive
+database.username=root
+database.password=password
+database.driverClassName=com.mysql.jdbc.Driver
+sourceTableName=mysourcetable
+targetTableName=mytargettable
+output.file=insert.sql
