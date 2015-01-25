@@ -168,13 +168,17 @@ public class DBQueryRunner {
       writer.println(HivePartition.ToSQLInsertPrefix());
       while (resultSet.next()) {
         ix++;
-        HivePartition item = new HivePartition(resultSet, new_tbl, i, sdsmap);
+	i++;
+        HivePartition item = new HivePartition(resultSet, i, new_tbl, sdsmap);
 
         map.put(item.PART_ID, i);
         boolean isFirst = (ix == 1);
         writer.println(item.ToSQLInsert( isFirst));
       }
+      i++;
       writer.println(";");
+      writer.println("UPDATE SEQUENCE_TABLE SET NEXT_VAL='" + i + "' WHERE SEQUENCE_NAME='org.apache.hadoop.hive.metastore.model.MPartition';");
+
       connection.close();
       writer.close();
 
@@ -282,12 +286,15 @@ public class DBQueryRunner {
       writer.println(HiveSerde.ToSQLInsertPrefix());
       while (resultSet.next()) {
         ix++;
+	i++;
         HiveSerde item = new HiveSerde(resultSet, i);
         map.put(item.SERDE_ID, i);
         boolean isFirst = (ix == 1);
         writer.println(item.ToSQLInsert( isFirst));
       }
       writer.println(";");
+      i++;
+      writer.println("UPDATE SEQUENCE_TABLE SET NEXT_VAL='" + i + "' WHERE SEQUENCE_NAME='org.apache.hadoop.hive.metastore.model.MSerDeInfo';");
       
       connection.close();
       writer.close();
@@ -325,12 +332,16 @@ public class DBQueryRunner {
       writer.println(HiveSD.ToSQLInsertPrefix());
       while (resultSet.next()) {
         ix++;
+	i++;
         HiveSD item = new HiveSD(resultSet, new_tbl, i, lookup);
         map.put(item.SD_ID, i);
         boolean isFirst = (ix == 1);
         writer.println(item.ToSQLInsert( isFirst));
       }
       writer.println(";");
+      i++;
+      writer.println("UPDATE SEQUENCE_TABLE SET NEXT_VAL='" + i + "' WHERE SEQUENCE_NAME='org.apache.hadoop.hive.metastore.model.MStorageDescriptor';");
+
       connection.close();
       writer.close();
 

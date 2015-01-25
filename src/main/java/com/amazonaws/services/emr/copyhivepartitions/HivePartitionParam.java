@@ -29,7 +29,7 @@ public class HivePartitionParam {
     if(!isFirst){
       sqlout+= ",";
     }
-    sqlout += "((" +PART_ID+ ", '" +PARAM_KEY+ "', '"+PARAM_VALUE+"')"; 
+    sqlout += "(" +PART_ID+ ", '" +PARAM_KEY+ "', '"+PARAM_VALUE+"')"; 
     return sqlout; 
   }
 
