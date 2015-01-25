@@ -168,7 +168,8 @@ public class DBQueryRunner {
       writer.println(HivePartition.ToSQLInsertPrefix());
       while (resultSet.next()) {
         ix++;
-        HivePartition item = new HivePartition(resultSet, new_tbl, i, sdsmap);
+	i++;
+        HivePartition item = new HivePartition(resultSet, i, new_tbl, sdsmap);
 
         map.put(item.PART_ID, i);
         boolean isFirst = (ix == 1);
@@ -282,6 +283,7 @@ public class DBQueryRunner {
       writer.println(HiveSerde.ToSQLInsertPrefix());
       while (resultSet.next()) {
         ix++;
+	i++;
         HiveSerde item = new HiveSerde(resultSet, i);
         map.put(item.SERDE_ID, i);
         boolean isFirst = (ix == 1);
@@ -325,6 +327,7 @@ public class DBQueryRunner {
       writer.println(HiveSD.ToSQLInsertPrefix());
       while (resultSet.next()) {
         ix++;
+	i++;
         HiveSD item = new HiveSD(resultSet, new_tbl, i, lookup);
         map.put(item.SD_ID, i);
         boolean isFirst = (ix == 1);
