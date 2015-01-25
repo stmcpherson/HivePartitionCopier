@@ -6,26 +6,27 @@ import java.util.HashMap;
 import java.util.Properties;
 
 public class InsertComposer {
-  
-  
-  public static void Run(Properties props){
-    
+
+  public static void Run(Properties props) throws ClassNotFoundException, SQLException {
+
     DBQueryRunner qr = null;
-    try {
-      qr = new DBQueryRunner(props);
-    } catch (IOException e) {
-      e.printStackTrace();
-    } 
     try {
       System.out.println("Testing Database Connection...");
       System.out.println("");
       System.out.println("");
-      if (qr.TestConnection())
-      {
+      
+      qr = new DBQueryRunner(props);
+      if (qr.TestConnection()) {
         System.out.println("Successfully connected to the database");
         System.out.println("");
         System.out.println("");
       }
+        
+    } catch (IOException e) {
+      System.out.println("Failed with IO exception. Check your settings.");
+      System.out.println("");
+      System.out.println("");
+      return; 
     } catch (ClassNotFoundException e) {
       System.out.println("FAILED TO CONNECT TO THE DATABASE. Check your settings.");
       System.out.println("");
@@ -40,17 +41,17 @@ public class InsertComposer {
     try {
       System.out.println("Fetching Serdes...");
       HashMap<Integer, Integer> serdesmap = qr.GetSerdes();
-      System.out.println("Found "+serdesmap.size()+ " Serdes in the database");
+      System.out.println("Found " + serdesmap.size() + " Serdes in the database");
       System.out.println("");
       System.out.println("");
       System.out.println("Fetching SDS objects...");
       HashMap<Integer, Integer> sdssmap = qr.GetSDs(serdesmap);
-      System.out.println("Found "+sdssmap.size()+ " SDS objects in the database");
+      System.out.println("Found " + sdssmap.size() + " SDS objects in the database");
       System.out.println("");
       System.out.println("");
       System.out.println("Fetching Partition objects...");
-      HashMap<Integer, Integer> partmap =  qr.GetPartitions(sdssmap);
-      System.out.println("Found "+partmap.size()+ " Partition objects in the database");
+      HashMap<Integer, Integer> partmap = qr.GetPartitions(sdssmap);
+      System.out.println("Found " + partmap.size() + " Partition objects in the database");
       System.out.println("");
       System.out.println("");
       System.out.println("Fetching SerdeParameters objects...");
@@ -66,18 +67,18 @@ public class InsertComposer {
       System.out.println("Fetching PartitionKeyValue objects...");
       qr.GetPartitionKeyValues(partmap);
       System.out.println("Comptleted loading PartitionKeyValue");
-      
+
       System.out.println("");
       System.out.println("");
-      
-      System.out.println("Output File has been written to [" + props.getProperty("output.file")+"]");
+
+      System.out.println("Output File has been written to [" + props.getProperty("output.file") + "]");
       System.out.println("");
-      
+
     } catch (IOException e) {
       e.printStackTrace();
+      return;
     }
-    
-    
+
   }
 
 }
